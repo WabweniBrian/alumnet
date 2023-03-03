@@ -1,28 +1,24 @@
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import ChatListScreen from "./screens/chat/ChatListScreen";
-import GroupsScreen from "./screens/chat/GroupsScreen";
-import DiscoverScreen from "./screens/chat/DiscoverScreen";
+import { ChatTabs } from "./ChatTabs";
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from "@react-navigation/stack";
 
-const ChatTabs = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
 
 export const ChatStack = () => (
-  <ChatTabs.Navigator
-    initialRouteName="ChatList"
+  <Stack.Navigator
     screenOptions={{
-      tabBarStyle: {
-        backgroundColor: "#982529",
-      },
-      tabBarIndicatorStyle: { backgroundColor: "#fff", height: 3 },
-      tabBarActiveTintColor: "#fff",
-      lazy: true,
+      headerShown: false,
+      cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     }}
   >
-    <ChatTabs.Screen
-      name="ChatList"
-      component={ChatListScreen}
-      options={{ tabBarLabel: "Chats" }}
-    />
-    <ChatTabs.Screen name="Groups" component={GroupsScreen} />
-    <ChatTabs.Screen name="Discover" component={DiscoverScreen} />
-  </ChatTabs.Navigator>
+    <Stack.Group>
+      <Stack.Screen
+        name="RootChat"
+        component={ChatTabs}
+        options={{ tabBarLabel: "Chats" }}
+      />
+    </Stack.Group>
+  </Stack.Navigator>
 );

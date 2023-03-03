@@ -1,8 +1,8 @@
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
-import RootStack from "./src/screens/RootStack";
 import { Provider } from "react-redux";
 import store from "./redux/store/store";
+import RootStack from "./src/navigation/RootStack";
 
 export default function App() {
   const [loaded] = useFonts({

@@ -6,12 +6,20 @@ import { TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
 import { signInValidationSchema } from "./userValidationSchema";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, setUser } from "../../../../redux/slices/authSlice";
 
 const SignInScreen = ({ navigation }) => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const updateSecureTextEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
+  const dispatch = useDispatch();
+  const { user } = useSelector(selectUser);
+
+  console.log(user);
+
+  const loginUser = () => {};
 
   return (
     <>
@@ -28,7 +36,7 @@ const SignInScreen = ({ navigation }) => {
           initialValues={{ email: "", password: "" }}
           validationSchema={signInValidationSchema}
           onSubmit={(values) => {
-            // Login Functionality
+            // dispatch(setUser(values));
             console.log(values);
           }}
         >
@@ -52,13 +60,14 @@ const SignInScreen = ({ navigation }) => {
                 <TextInput
                   placeholder="Your Email"
                   style={styles.textInput}
+                  tw="border-slate-300"
                   autoCapitalize="none"
                   value={values.email}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                 />
 
-                {!errors.email && (
+                {touched.email && !errors.email && (
                   <Animatable.View animation="bounceIn">
                     <Feather
                       name="check-circle"
@@ -68,11 +77,11 @@ const SignInScreen = ({ navigation }) => {
                     />
                   </Animatable.View>
                 )}
-                <Text tw="text-red-500 text-sm my-2">
-                  {touched.email && errors.email}
-                </Text>
               </View>
-              <Text style={[styles.text_footer, { marginTop: 35 }]}>
+              {errors.email && touched.email && (
+                <Text tw="text-red-500 text-sm my-2">{errors.email} </Text>
+              )}
+              <Text style={[styles.text_footer, { marginTop: 30 }]}>
                 Password
               </Text>
               <View style={styles.action}>
@@ -85,7 +94,8 @@ const SignInScreen = ({ navigation }) => {
                 <TextInput
                   placeholder="Password"
                   style={styles.textInput}
-                  secureTextEntry={data.secureTextEntry}
+                  tw="border-slate-300"
+                  secureTextEntry={secureTextEntry}
                   autoCapitalize="none"
                   value={values.password}
                   onChangeText={handleChange("password")}
@@ -93,7 +103,7 @@ const SignInScreen = ({ navigation }) => {
                 />
 
                 <TouchableOpacity onPress={updateSecureTextEntry}>
-                  {data.secureTextEntry ? (
+                  {secureTextEntry ? (
                     <Feather
                       name="eye-off"
                       size={20}
@@ -109,10 +119,10 @@ const SignInScreen = ({ navigation }) => {
                     />
                   )}
                 </TouchableOpacity>
-                <Text tw="text-red-500 text-sm my-2">
-                  {touched.password && errors.password}
-                </Text>
               </View>
+              {errors.password && touched.password && (
+                <Text tw="text-red-500 text-sm my-2">{errors.password} </Text>
+              )}
               <Text
                 style={{
                   color: "#982529",
