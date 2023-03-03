@@ -6,7 +6,7 @@ const AccountMainScreen = ({ navigation }) => {
     <ScrollView tw="mt-6 px-4">
       <View tw="flex-row gap-x-2 pb-4 border-b border-slate-300">
         <Image
-          source={require("../../../../assets/images/avatar.png")}
+          source={require("../../../assets/images/avatar.png")}
           tw="w-20 h-20 rounded-full"
         />
         <View>

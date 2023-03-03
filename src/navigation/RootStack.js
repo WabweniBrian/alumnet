@@ -3,7 +3,7 @@ import {
   CardStyleInterpolators,
   createStackNavigator,
 } from "@react-navigation/stack";
-import OnBoardingScreen from "./screens/OnBoardingScreen";
+import OnBoardingScreen from "../screens/OnBoardingScreen";
 import HomeStack from "./HomeStack";
 import { AuthStack } from "./AuthStack";
 
@@ -18,8 +18,8 @@ const RootStack = () => (
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
     >
-      <Stack.Screen name="Onboarding" component={OnBoardingScreen} />
-      <Stack.Screen name="Auth" component={AuthStack} />
+      {/* <Stack.Screen name="Onboarding" component={OnBoardingScreen} />
+      <Stack.Screen name="Auth" component={AuthStack} /> */}
       <Stack.Screen name="Root" component={HomeStack} />
     </Stack.Navigator>
   </>

@@ -1,15 +1,7 @@
 import { View, Text, Image } from "react-native";
-import React from "react";
 import moment from "moment";
 
 const Messages = ({ text, createdAt, user }) => {
-  const formattedDate = moment(createdAt).calendar(null, {
-    sameDay: () => `[${moment(createdAt).format("h:mm A")}]`,
-    lastDay: "[Yesterday]",
-    lastWeek: "dddd",
-    sameElse: "MMM DD, YYYY",
-  });
-
   return (
     <View tw="my-2">
       {user.id === "u1" ? (

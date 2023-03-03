@@ -2,10 +2,10 @@ import {
   CardStyleInterpolators,
   createStackNavigator,
 } from "@react-navigation/stack";
-import AccountMainScreen from "./screens/account/AccountMainScreen";
-import ProfileSettingsScreen from "./screens/account/ProfileSettingsScreen";
-import GeneralSettingsScreen from "./screens/account/GeneralSettingsScreen";
-import ProfileInfoScreen from "./screens/account/ProfileInfoScreen";
+import AccountMainScreen from "../screens/account/AccountMainScreen";
+import ProfileSettingsScreen from "../screens/account/ProfileSettingsScreen";
+import GeneralSettingsScreen from "../screens/account/GeneralSettingsScreen";
+import ProfileInfoScreen from "../screens/account/ProfileInfoScreen";
 
 const Stack = createStackNavigator();
 

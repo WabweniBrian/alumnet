@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import Feeds from "../../components/feeds/Feeds";
+import Feeds from "../components/feeds/Feeds";
 
 const FeedsScreen = ({ navigation }) => {
   return (

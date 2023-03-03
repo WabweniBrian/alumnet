@@ -56,7 +56,7 @@ const OnBoardingScreen = ({ navigation }) => {
             backgroundColor: "#fff",
             image: (
               <Image
-                source={require("../../../assets/onboarding1.png")}
+                source={require("../../assets/onboarding1.png")}
                 style={{ width: 350, height: 350 }}
                 resizeMode="contain"
               />
@@ -69,7 +69,7 @@ const OnBoardingScreen = ({ navigation }) => {
             backgroundColor: "#fff",
             image: (
               <Image
-                source={require("../../../assets/onboarding2.png")}
+                source={require("../../assets/onboarding2.png")}
                 style={{ width: 350, height: 350 }}
                 resizeMode="contain"
               />
@@ -83,7 +83,7 @@ const OnBoardingScreen = ({ navigation }) => {
             backgroundColor: "#fff",
             image: (
               <Image
-                source={require("../../../assets/onboarding3.png")}
+                source={require("../../assets/onboarding3.png")}
                 style={{ width: 350, height: 350 }}
                 resizeMode="contain"
               />

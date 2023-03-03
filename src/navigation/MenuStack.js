@@ -1,12 +1,12 @@
-import MenuListScreen from "./menu/MenuListScreen";
-import PollSurveyScreen from "./menu/PollSurveyScreen";
-import DonationScreen from "./menu/DonationScreen";
-import VolunteeringScreen from "./menu/VolunteeringScreen";
-import MentorshipScreen from "./menu/MentorshipScreen";
-import JobListingsScreen from "./menu/JobListingsScreen";
-import AnnouncementsScreen from "./menu/AnnouncementsScreen";
-import EventsScreen from "./menu/EventsScreen";
-import MeetingsScreen from "./menu/MeetingsScreen";
+import MenuListScreen from "../screens/menu/MenuListScreen";
+import PollSurveyScreen from "../screens/menu/PollSurveyScreen";
+import DonationScreen from "../screens/menu/DonationScreen";
+import VolunteeringScreen from "../screens/menu/VolunteeringScreen";
+import MentorshipScreen from "../screens/menu/MentorshipScreen";
+import JobListingsScreen from "../screens/menu/JobListingsScreen";
+import AnnouncementsScreen from "../screens/menu/AnnouncementsScreen";
+import EventsScreen from "../screens/menu/EventsScreen";
+import MeetingsScreen from "../screens/menu/MeetingsScreen";
 import {
   CardStyleInterpolators,
   createStackNavigator,

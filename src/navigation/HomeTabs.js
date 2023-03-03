@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 
 // Screens
-import HomeScreen from "./screens/HomeScreen";
-import FeedsScreen from "./screens/FeedsScreen";
-import AccountScreen from "./screens/AccountScreen";
 import { ChatStack } from "./ChatStack";
-import { MenuStack } from "./screens/MenuStack";
+import { MenuStack } from "./MenuStack";
 import { AccountStack } from "./AccountStack";
+import HomeScreen from "../screens/HomeScreen";
+import FeedsScreen from "../screens/FeedsScreen";
+import { HomeOverviewStack } from "./HomeOverviewStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -51,7 +51,7 @@ const HomeTabs = () => {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeOverviewStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (

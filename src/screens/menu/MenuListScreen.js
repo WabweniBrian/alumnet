@@ -1,7 +1,6 @@
 import { View, FlatList } from "react-native";
-import React from "react";
-import { menuLinks } from "../../../data/menuLinks";
-import MenuItem from "../../../components/menu/MenuItem";
+import { menuLinks } from "../../data/menuLinks";
+import MenuItem from "../../components/menu/MenuItem";
 
 const MenuListScreen = () => {
   return (

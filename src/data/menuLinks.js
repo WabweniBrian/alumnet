@@ -19,7 +19,7 @@ export const menuLinks = [
   },
   {
     id: 4,
-    title: "Poll & Survey",
+    title: "Polls & Surveys",
     route: "PollSurvey",
     icon: require("../../assets/icons/survey.png"),
   },
