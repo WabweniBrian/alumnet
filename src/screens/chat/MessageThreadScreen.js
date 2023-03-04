@@ -11,60 +11,55 @@ import {
 } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
 import { TextInput } from "react-native-gesture-handler";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { AntDesign, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import moment from "moment";
 import { messages } from "../../data/messages";
 import Messages from "../../components/chats/Messages";
+import * as DocumentPicker from "expo-document-picker";
+import * as ImagePicker from "expo-image-picker";
+import AttachmentModal from "../../components/AttachmentModal";
+// import EmojiKeyboard from "../../components/chats/EmojiKeyboard";
 
 const MessageThreadScreen = () => {
   const [message, setMessage] = useState("");
   const [showEmojiBoard, setShowEmojiBoard] = useState(false);
   const flatListRef = useRef(null);
-  const [scrollY, setScrollY] = useState(new Animated.Value(0));
-  const opacity = useRef(new Animated.Value(1)).current;
+  const [modalVisible, setModalVisible] = useState(false);
+  const [file, setFile] = useState(null);
+  const [image, setImage] = useState(null);
 
+  // Handle Opening the Attachment Modal--------------------------------------------------------------------------
+  const handleModalOpen = () => {
+    Keyboard && Keyboard.dismiss();
+    setModalVisible(true);
+  };
+
+  // Handle Closing the Attachment Modal-------------------------------------------------------------
+  const handleModalClose = () => {
+    setModalVisible(false);
+    image && setImage(null);
+    file && setFile(null);
+  };
+
+  // EmojiSelected + Message--------------------------------------------------------------------------
   function onEmojiSelected(emoji) {
     setMessage((prevMessage) => prevMessage + emoji);
   }
-
+  // Toggle Emoji Keyboard--------------------------------------------------------------------------
   const toggleEmojiBoard = () => {
     setShowEmojiBoard(!showEmojiBoard);
   };
 
+  // Scroll to bottom to show recent messages--------------------------------------------------------------
   useEffect(() => {
     flatListRef.current?.scrollToEnd({ animated: false });
   }, [messages]);
-
-  // useEffect(() => {
-  //   const listener = scrollY.addListener(({ value }) => {
-  //     const contentHeight = messages.length * MESSAGE_HEIGHT;
-  //     const isScrolledToBottom = value >= contentHeight - DEVICE_HEIGHT;
-  //     Animated.timing(opacity, {
-  //       toValue: isScrolledToBottom ? 0 : 1,
-  //       duration: 200,
-  //       useNativeDriver: true,
-  //     }).start();
-  //   });
-  //   return () => {
-  //     scrollY.removeListener(listener);
-  //   };
-  // }, [messages, opacity, scrollY]);
 
   const handleScrollToBottom = () => {
     flatListRef.current?.scrollToEnd({ animated: true });
   };
 
-  // const messagesByDate = messages
-  //   .sort((a, b) => (b.createdAt < a.createdAt ? 1 : -1))
-  //   .reduce((result, message) => {
-  //     const date = new Date(message.createdAt).toDateString();
-  //     if (!result[date]) {
-  //       result[date] = [];
-  //     }
-  //     result[date].push(message);
-  //     return result;
-  //   }, {});
-
+  // Categorise message depending on the date they were sent----------------------------------------------
   const messagesByDate = messages
     .sort((a, b) => (b.createdAt < a.createdAt ? 1 : -1))
     .reduce((result, message) => {
@@ -81,6 +76,99 @@ const MessageThreadScreen = () => {
       return result;
     }, {});
 
+  // -------------------------------Document and Image Picking -------------------------------
+  const pickDocument = async () => {
+    image && setImage(null);
+    try {
+      let result = await DocumentPicker.getDocumentAsync({
+        type: "*/*",
+      });
+      if (!result.cancelled) {
+        const fileExtension = result.name.split(".").pop();
+        let icon = null;
+        if (fileExtension === "pdf") {
+          icon = require("../../../assets/icons/pdf.png");
+        } else if (fileExtension === "word" || fileExtension === "docx") {
+          icon = require("../../../assets/icons/word.png");
+        } else if (fileExtension === "zip" || fileExtension === "rar") {
+          icon = require("../../../assets/icons/zip.png");
+        } else if (fileExtension === "xls" || fileExtension === "xlsx") {
+          icon = require("../../../assets/icons/excel.png");
+        } else if (fileExtension === "ppt" || fileExtension === "pptx") {
+          icon = require("../../../assets/icons/powerpoint.png");
+        } else if (fileExtension === "mdb" || fileExtension === "accdb") {
+          icon = require("../../../assets/icons/microsoft-access.png");
+        } else if (
+          fileExtension === "png" ||
+          fileExtension === "jpg" ||
+          fileExtension === "jpeg" ||
+          fileExtension === "gif"
+        ) {
+          icon = require("../../../assets/icons/image.png");
+        } else {
+          icon = require("../../../assets/icons/file.png");
+        }
+        setFile({
+          uri: result.uri,
+          name: result.name,
+          icon: icon,
+        });
+      }
+    } catch (error) {
+      console.log("Error picking document:", error);
+      alert("An error occurred while picking a document.");
+    }
+  };
+
+  // Ask for permision before picking an image from the user's media library
+  useEffect(() => {
+    (async () => {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    })();
+  }, []);
+
+  // Handle Image Picking--------------------------------------------------------------------------
+  const pickImage = async (method) => {
+    file && setFile(null);
+    let result;
+    try {
+      if (method === "camera") {
+        result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+      } else {
+        result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+      }
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+      }
+    } catch (error) {
+      alert("Error: " + error);
+    }
+  };
+
+  const sendImage = () => {
+    setImage(null);
+    setModalVisible(false);
+  };
+
+  const sendDocument = () => {
+    setFile(null);
+    setModalVisible(false);
+  };
+
   return (
     <ImageBackground
       tw="flex-1"
@@ -89,27 +177,6 @@ const MessageThreadScreen = () => {
     >
       <View tw="mt-3 relative">
         <View tw="px-4 pb-16">
-          {/* <FlatList
-            ref={flatListRef}
-            showsVerticalScrollIndicator={false}
-            data={messages}
-            renderItem={({ item }) => <Messages {...item} />}
-            keyExtractor={(item) => item.id}
-            onContentSizeChange={() =>
-              flatListRef.current?.scrollToEnd({ animated: false })
-            }
-            onLayout={() =>
-              flatListRef.current?.scrollToEnd({ animated: false })
-            }
-            // onScroll={Animated.event(
-            //   [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            //   {
-            //     useNativeDriver: true,
-            //   }
-            // )}
-            // scrollEventThrottle={16}
-          /> */}
-
           <FlatList
             ref={flatListRef}
             showsVerticalScrollIndicator={false}
@@ -138,7 +205,7 @@ const MessageThreadScreen = () => {
           />
         </View>
         <TouchableWithoutFeedback onPress={handleScrollToBottom}>
-          <Animated.View style={[styles.button, { opacity }]}>
+          <Animated.View style={styles.button}>
             <Feather name="chevron-down" color="#fff" />
           </Animated.View>
         </TouchableWithoutFeedback>
@@ -147,15 +214,14 @@ const MessageThreadScreen = () => {
           style={styles.shadow}
         >
           <View tw="bg-slate-300 rounded-full px-4 py-2 flex-row items-center flex-1">
-            <TouchableOpacity onPress={toggleEmojiBoard}>
+            <TouchableOpacity
+            // onPress={() => setShowEmojiBoard(!showEmojiBoard)}
+            >
               <Feather name="smile" size={25} color="grey" />
             </TouchableOpacity>
-            {/* <EmojiKeyboard
-              onEmojiSelected={onEmojiSelected}
-              showEmojiBoard={showEmojiBoard}
-            /> */}
+            {/* <EmojiKeyboard onEmojiSelected={onEmojiSelected} /> */}
             <TextInput placeholder="Enter message" tw="ml-2 flex-1" multiline />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleModalOpen}>
               <AntDesign name="link" size={20} color="grey" />
             </TouchableOpacity>
           </View>
@@ -164,6 +230,16 @@ const MessageThreadScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <AttachmentModal
+        visible={modalVisible}
+        onClose={handleModalClose}
+        pickDocument={pickDocument}
+        pickImage={pickImage}
+        image={image}
+        sendImage={sendImage}
+        file={file}
+        sendDocument={sendDocument}
+      />
     </ImageBackground>
   );
 };

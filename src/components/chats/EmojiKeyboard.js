@@ -1,7 +1,11 @@
-import { View, Text } from "react-native";
-// import EmojiBoard from "react-native-emoji-board";
+// import { View, Text } from "react-native";
+import EmojiBoard from "react-native-emoji-board";
 
-const EmojiKeyboard = ({ onEmojiSelected, showEmojiBoard }) => {
+const EmojiKeyboard = () => {
+  const [show, setShow] = useState(true);
+  const onClick = (emoji) => {
+    console.log(emoji);
+  };
   return (
     // <EmojiBoard
     //   onEmojiSelected={onEmojiSelected}
@@ -14,9 +18,7 @@ const EmojiKeyboard = ({ onEmojiSelected, showEmojiBoard }) => {
     //   showTrending={true}
     //   containerStyle={{ backgroundColor: "white" }}
     // />
-    <View>
-      <Text>Hello</Text>
-    </View>
+    <EmojiBoard showBoard={show} onClick={onClick} />
   );
 };
 

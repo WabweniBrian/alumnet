@@ -6,7 +6,6 @@ import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { ChatStack } from "./ChatStack";
 import { MenuStack } from "./MenuStack";
 import { AccountStack } from "./AccountStack";
-import HomeScreen from "../screens/HomeScreen";
 import FeedsScreen from "../screens/FeedsScreen";
 import { HomeOverviewStack } from "./HomeOverviewStack";
 
@@ -47,6 +46,7 @@ const HomeTabs = () => {
         tabBarStyle: {
           height: 60,
         },
+        cardStyle: { zIndex: 1 },
       }}
     >
       <Tab.Screen

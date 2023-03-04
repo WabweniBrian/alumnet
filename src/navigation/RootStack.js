@@ -18,8 +18,8 @@ const RootStack = () => (
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
     >
-      {/* <Stack.Screen name="Onboarding" component={OnBoardingScreen} />
-      <Stack.Screen name="Auth" component={AuthStack} /> */}
+      <Stack.Screen name="Onboarding" component={OnBoardingScreen} />
+      <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Root" component={HomeStack} />
     </Stack.Navigator>
   </>

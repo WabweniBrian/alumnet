@@ -5,7 +5,7 @@ const HomeScreen = () => {
     <View className="flex-1 items-center justify-center">
       <View>
         <Image
-          source={require("../../../../assets/alumnet.png")}
+          source={require("../../../assets/alumnet.png")}
           alt="Equity logo"
         />
         <Text className="text-3xl font-bold text-slate-700">Home Screen</Text>
