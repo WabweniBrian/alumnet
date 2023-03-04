@@ -1,8 +1,8 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import Feeds from "../components/feeds/Feeds";
 import { useState } from "react";
-import AddPostModal from "../data/AddPostModal";
 import { Feather } from "@expo/vector-icons";
+import AddPostModal from "../components/feeds/AddPostModal";
 
 const FeedsScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
