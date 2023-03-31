@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "usesIcloudStorage": true
@@ -23,7 +25,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/alumnet.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.wabwenibrian.Base_App"
     },
     "web": {
       "favicon": "./assets/alumnet.png"
@@ -35,6 +38,11 @@
           "iCloudContainerEnvironment": "Production"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ddf34daa-4634-49e9-a896-d78f0c5099af"
+      }
+    }
   }
 }

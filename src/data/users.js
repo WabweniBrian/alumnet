@@ -10,7 +10,7 @@ export const users = [
     lastMessage: {
       id: "m1",
       text: "Well done this sprint, guys! 😁",
-      createdAt: "2023-03-01T13:30:00.000Z",
+      createdAt: "2023-03-04T13:30:00.000Z",
     },
   },
   {
